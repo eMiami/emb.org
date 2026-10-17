@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 76" width="60" height="76">
+  <defs>
+    <radialGradient id="g1" cx="40%" cy="30%" r="60%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#FFF8E7"></stop>
+      <stop offset="18%" stop-color="#FFD966"></stop>
+      <stop offset="45%" stop-color="#F5A623"></stop>
+      <stop offset="72%" stop-color="#DC8E12"></stop>
+      <stop offset="100%" stop-color="#9C6020"></stop>
+    </radialGradient>
+    <radialGradient id="g2" cx="34%" cy="26%" r="24%" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="white" stop-opacity="0.55"></stop>
+      <stop offset="100%" stop-color="white" stop-opacity="0"></stop>
+    </radialGradient>
+    <filter id="sh" x="-40%" y="-25%" width="180%" height="175%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"></feGaussianBlur>
+      <feOffset dx="0" dy="5" in="blur" result="off"></feOffset>
+      <feFlood flood-color="#78350F" flood-opacity="0.45" result="color"></feFlood>
+      <feComposite in="color" in2="off" operator="in" result="shadow"></feComposite>
+      <feMerge><feMergeNode in="shadow"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+  </defs>
+  <path d="M30 4 C19 4 5 19 5 41 C5 60 16 72 30 72 C44 72 55 60 55 41 C55 19 41 4 30 4 Z" fill="url(#g1)" filter="url(#sh)"></path>
+  <path d="M30 4 C19 4 5 19 5 41 C5 60 16 72 30 72 C44 72 55 60 55 41 C55 19 41 4 30 4 Z" fill="url(#g2)"></path>
+</svg>

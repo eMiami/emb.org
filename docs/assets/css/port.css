@@ -1,0 +1,21 @@
+/* Adjustments for the static export: things Squarespace's scripts used to do. */
+
+/* Embedded video blocks: poster overlay until clicked, then the provider's player. */
+.sqs-video-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.sqs-video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer; }
+.sqs-video-overlay img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.sqs-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+/* Squarespace-hosted videos are now plain <video> files, with Squarespace's play button. */
+.sqs-native-video { position: relative; }
+.sqs-native-video .port-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; object-fit: cover; }
+.port-video-play {
+  position: absolute; top: 50%; left: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px;
+  border: 0; border-radius: 50%; background: rgba(0, 0, 0, .55); cursor: pointer; padding: 0;
+}
+.port-video-play::after {
+  content: ""; position: absolute; top: 50%; left: 50%; margin: -11px 0 0 -6px;
+  border-style: solid; border-width: 11px 0 11px 18px; border-color: transparent transparent transparent #fff;
+}
+.port-video-play:hover { background: rgba(0, 0, 0, .7); }
+.port-video-play[hidden] { display: none; }
