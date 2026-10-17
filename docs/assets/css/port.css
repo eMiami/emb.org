@@ -19,3 +19,8 @@
 }
 .port-video-play:hover { background: rgba(0, 0, 0, .7); }
 .port-video-play[hidden] { display: none; }
+
+/* PadelSpot business plan: scrollable page-by-page viewer (was a Drive preview). */
+.port-doc { overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; padding: 8px; background: #e8e8e8; }
+.port-doc img { display: block; width: 100%; height: auto; margin: 0 0 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); }
+.port-doc img:last-child { margin-bottom: 0; }

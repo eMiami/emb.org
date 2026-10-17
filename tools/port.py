@@ -8,7 +8,7 @@ pages use into docs/assets/, so the result has no dependency on Squarespace.
 Interactive behaviour (galleries, lightbox, menu, video, animations) is provided
 by docs/assets/js/site.js instead.
 
-Usage:  python3 tools/port.py            (needs: beautifulsoup4, lxml, pillow; ffmpeg for videos)
+Usage:  python3 tools/port.py [page ...]  (needs: pillow, pymupdf; ffmpeg for videos)
 Env:    PORT_CACHE  download cache dir   (default ~/.cache/emb-port)
         FFMPEG      ffmpeg binary         (default: ffmpeg on PATH)
 """
@@ -406,8 +406,37 @@ def padel_fixups(h):
     if not m:
         raise SystemExit("padel: form block not found")
     h = h[:m.start()] + form + h[element_end(h, m.start()):]
+    # Below the buttons the page previewed the business plan from a Drive file that has since been
+    # replaced (the preview reads "file does not exist"). Show the plan itself, page by page.
+    pdf = re.search(r'href="(/assets/files/[^"]*Business-Plan[^"]*\.pdf)"', h).group(1)
+    h, n = re.subn(r'<iframe\s+src="https://drive\.google\.com/file/d/[^"]+/preview"[^>]*></iframe>', business_plan_viewer(pdf), h)
+    if n != 1:
+        raise SystemExit("padel: business plan preview not found")
     padel_font()
     return h
+
+
+def business_plan_viewer(pdf_rel):
+    """Scrollable letter-size viewer of a PDF, pre-rendered to images so it works on phones too."""
+    import pymupdf
+    doc = pymupdf.open(DOCS / pdf_rel.lstrip("/"))
+    folder = "assets/img/padel-business-plan"
+    pages = []
+    for i, page in enumerate(doc, 1):
+        files = {}
+        for w in (612, 1224):
+            rel = f"{folder}/p{i:02d}-{w}.jpg"
+            out = DOCS / rel
+            zoom = w / page.rect.width
+            if not out.exists():
+                out.parent.mkdir(parents=True, exist_ok=True)
+                page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False).save(str(out), jpg_quality=82)
+            files[w] = ("/" + rel, round(page.rect.height * zoom))
+        pages.append(f'<img src="{files[1224][0]}" srcset="{files[612][0]} 612w, {files[1224][0]} 1224w" '
+                     f'sizes="(max-width: 816px) 100vw, 816px" width="1224" height="{files[1224][1]}" '
+                     f'alt="Padel Spot Business Plan, page {i}" loading="lazy" decoding="async">')
+    return ('<div class="port-doc" role="document" aria-label="Padel Spot Business Plan" '
+            'style="width: 100%; height: calc(100vw * (11 / 8.5)); max-height: 1056px;">' + "".join(pages) + "</div>")
 
 
 def padel_font():
