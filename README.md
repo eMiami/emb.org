@@ -1,7 +1,7 @@
 # emb.org
 
 Static copy of Eli Blatt's site, moved off Squarespace. Served by GitHub Pages from `docs/`
-(branch `site`); staging address `port.emb.org`.
+(branch `site`) at https://www.emb.org.
 
 - `docs/` is the site. Pages are plain HTML exported from Squarespace; their look comes from
   Squarespace's own compiled stylesheets (`docs/assets/css/`), copied locally.
@@ -15,11 +15,15 @@ Static copy of Eli Blatt's site, moved off Squarespace. Served by GitHub Pages f
 - `tools/port.py` re-runs the whole export from the live Squarespace sites. It only works
   while those sites are still up; after that, edit `docs/` directly.
 
-## Going live at emb.org
+## Live at emb.org (switched 2026-10-17)
 
-1. GoDaddy DNS for emb.org: replace the four Squarespace `A` records on `@` with GitHub's
-   (185.199.108.153, .109.153, .110.153, .111.153), point `www` (CNAME) at `emiami.github.io`.
-   Leave the MX (Google mail) records alone.
-2. `docs/CNAME` → `www.emb.org`; `docs/robots.txt` → allow all and list `/sitemap.xml`.
-3. In the repo's Pages settings, set the custom domain to `www.emb.org` and enforce HTTPS.
-4. Then cancel Squarespace (both emb.org and padelspot.com).
+GoDaddy DNS for emb.org: the four `@` A records point at GitHub Pages
+(185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153) and `www` is a CNAME to
+`emiami.github.io`; Pages' custom domain is `www.emb.org`, so `emb.org` redirects to it.
+MX (Google mail) records were not touched. The `port` staging record was removed.
+
+To roll back to Squarespace (only while that subscription is still active): set the `@` A records
+back to 198.185.159.144, 198.185.159.145, 198.49.23.144, 198.49.23.145 and `www` back to
+`ext-cust.squarespace.com`.
+
+Squarespace (emb.org and padelspot.com) can be cancelled once the site is confirmed at emb.org.
