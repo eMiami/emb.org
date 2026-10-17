@@ -10,6 +10,8 @@ Static copy of Eli Blatt's site, moved off Squarespace. Served by GitHub Pages f
   (which opens an email to e@emb.org — there is no server).
 - `docs/portfolio/padelspot/` is a copy of padelspot.com/invest (being wound down). Its body
   font (Adobe proxima-nova, licensed to Squarespace) is replaced by Figtree.
+  Its business-plan preview (a Drive file that no longer exists) shows the plan PDF instead,
+  pre-rendered to page images (`docs/assets/img/padel-business-plan/`).
 - Portfolio tiles for Regime Trader (links out to regimetrader.ai) and Padel Spot are added
   by `tools/port.py`; their images are rendered from `tools/tiles/`.
 - `tools/port.py` re-runs the whole export from the live Squarespace sites. It only works
