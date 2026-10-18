@@ -28,7 +28,8 @@ To roll back to Squarespace (only while that subscription is still active): set 
 back to 198.185.159.144, 198.185.159.145, 198.49.23.144, 198.49.23.145 and `www` back to
 `ext-cust.squarespace.com`.
 
-The emb.org Squarespace plan was cancelled on 2026-10-18; it stays active (unused) until 2027-06-28,
-so rolling back is possible until then. padelspot.com is on a separate Squarespace login and its
-DNS (including Google mail MX records) is hosted by Squarespace; move that to GoDaddy before its
-plan ends or padelspot.com email stops.
+Both Squarespace plans are cancelled (2026-10-18), nothing renews: emb.org stays up (unused) until
+2027-06-28, so rolling back is possible until then; padelspot.com's Squarespace site runs until
+2027-01-14 and then goes offline. padelspot.com's registration is in a different GoDaddy account
+(renews 2027-05-18); its email bounces (the old PadelSpot Google Workspace has no subscription).
+The PadelSpot contact form on emb.org opens an email to e@emb.org in the visitor's mail app.
