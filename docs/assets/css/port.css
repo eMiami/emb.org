@@ -24,3 +24,7 @@
 .port-doc { overflow-y: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box; padding: 8px; background: #e8e8e8; }
 .port-doc img { display: block; width: 100%; height: auto; margin: 0 0 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); }
 .port-doc img:last-child { margin-bottom: 0; }
+
+/* Homepage logo morph (canvas replaces the slides when WebGL is available). */
+.port-morph-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.port-morph-on .gallery-slideshow-item { visibility: hidden !important; }

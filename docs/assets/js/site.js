@@ -306,6 +306,7 @@
       if (sized) sized.style.height = (sized.clientWidth * 2 / 3) + 'px';
     }
     size(); onResize(size);
+    if (root.hasAttribute('data-port-morph') && morph(root, p)) return;
     var slides = $$('.gallery-slideshow-item', root);
     var thumbs = $$('.gallery-slideshow-thumbnails-thumb', root);
     thumbs.forEach(function (t) { var i = $('img', t); if (i) i.setAttribute('data-loaded', 'true'); });
@@ -325,6 +326,124 @@
       }
     });
     thumbs.forEach(function (t, i) { t.addEventListener('click', function (e) { e.preventDefault(); show.go(i); }); });
+  }
+
+  // ------------------------------------------------------------ homepage logo morph
+  // The logos live as signed distance fields in one texture (R, G, B = one logo each, in
+  // display order; built by tools/morph_sdf.py). Blending two fields and taking the edge gives
+  // a true shape-to-shape morph, with a little liquid warp while it moves. Falls back to the
+  // ordinary slideshow when WebGL or motion is unavailable (returns false).
+  var MORPH_VS = 'attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }';
+  var MORPH_FS = [
+    'precision highp float;',
+    'uniform sampler2D tex; uniform vec3 from, to; uniform float t, time, px, draw; uniform vec2 size;',
+    'float hash(vec2 q) { return fract(sin(dot(q, vec2(127.1, 311.7))) * 43758.5453); }',
+    'float noise(vec2 q) { vec2 i = floor(q), f = fract(q); f = f * f * (3.0 - 2.0 * f);',
+    '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y); }',
+    'float field(vec2 q, vec3 ch) {',
+    '  if (q.x < 0.0 || q.y < 0.0 || q.x > 1.0 || q.y > 1.0) return 1.0;',
+    '  return dot(texture2D(tex, q).rgb, ch); }',
+    'vec2 turn(vec2 q, float a) { q -= 0.5; float c = cos(a), s = sin(a); return vec2(c * q.x - s * q.y, s * q.x + c * q.y) + 0.5; }',
+    'void main() {',
+    '  vec2 uv = (gl_FragCoord.xy - 0.5 * size) / draw + 0.5;',
+    '  float m = sin(3.14159265 * t);',
+    // slow liquid ripple while the shapes are in motion
+    '  vec2 w = vec2(noise(uv * 2.6 + time * 0.45), noise(uv * 2.6 + 23.0 - time * 0.45)) - 0.5;',
+    '  vec2 q = uv + w * 0.05 * m;',
+    // the outgoing logo turns away as the incoming one turns into place
+    '  float a = field(turn(q, 0.55 * t), from), b = field(turn(q, -0.55 * (1.0 - t)), to);',
+    '  float v = mix(a, b, t);',
+    // edge width from how fast v changes on screen, so no soft grey where the shapes cancel out
+    '  gl_FragColor = vec4(0.0, 0.0, 0.0, clamp((0.5 - v) / max(EDGE, 1e-4) + 0.5, 0.0, 1.0));',
+    '}'
+  ].join('\n');
+
+  function morph(root, p) {
+    if (reduceMotion) return false;
+    var list = $('.gallery-slideshow-list', root);
+    var canvas = document.createElement('canvas');
+    var gl = canvas.getContext('webgl', { premultipliedAlpha: true, antialias: false });
+    if (!gl || !list) return false;
+    function shader(type, src) {
+      var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+    }
+    var fsHead = gl.getExtension('OES_standard_derivatives')
+      ? '#extension GL_OES_standard_derivatives : enable\n#define EDGE fwidth(v)\n' : '#define EDGE px\n';
+    var vs = shader(gl.VERTEX_SHADER, MORPH_VS), fs = shader(gl.FRAGMENT_SHADER, fsHead + MORPH_FS);
+    if (!vs || !fs) return false;
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    var u = {};
+    ['tex', 'from', 'to', 't', 'time', 'px', 'draw', 'size'].forEach(function (n) { u[n] = gl.getUniformLocation(prog, n); });
+
+    var pad = parseFloat(root.getAttribute('data-port-morph-pad')) || 0;
+    var count = 3, hold = 2400, move = 1600;
+    var CH = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    var start = 0, visible = true, raf = 0, ready = false;
+    canvas.className = 'port-morph-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(list.clientWidth * dpr);
+      canvas.height = Math.round(list.clientHeight * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      var drawPx = Math.min(canvas.width, canvas.height) / (1 - 2 * pad);
+      gl.uniform2f(u.size, canvas.width, canvas.height);
+      gl.uniform1f(u.draw, drawPx);
+      gl.uniform1f(u.px, 4 / drawPx);  // field value per device pixel: 1.0 spans 256 of 1024 texels
+    }
+    function frame(now) {
+      raf = 0;
+      if (!start) start = now;
+      var cycle = hold + move, el = now - start, i = Math.floor(el / cycle) % count;
+      var k = Math.max(0, (el % cycle) - hold) / move;
+      var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      gl.uniform3fv(u.from, CH[i]); gl.uniform3fv(u.to, CH[(i + 1) % count]);
+      gl.uniform1f(u.t, e); gl.uniform1f(u.time, now / 1000);
+      gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (visible) raf = requestAnimationFrame(frame);
+    }
+    function fallback() {
+      canvas.remove(); root.classList.remove('port-morph-on');
+      root.removeAttribute('data-port-morph'); gallerySlideshow(root);
+    }
+
+    var img = new Image();
+    img.onload = function () {
+      var tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.uniform1i(u.tex, 0);
+      list.appendChild(canvas);
+      root.classList.add('port-morph-on');
+      resize(); onResize(resize);
+      ready = true;
+      raf = requestAnimationFrame(frame);
+    };
+    img.onerror = fallback;
+    img.src = root.getAttribute('data-port-morph');
+    canvas.addEventListener('webglcontextlost', function (e) { e.preventDefault(); cancelAnimationFrame(raf); fallback(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        if (visible && ready && !raf) raf = requestAnimationFrame(frame);
+      }).observe(root);
+    }
+    return true;
   }
 
   function galleryFullscreen(root) {
@@ -463,6 +582,9 @@
     videos();
     forms();
     animations();
+    // Squarespace's stylesheet hides header, sections and footer (a 2s "hideContent"
+    // animation) until the page reports its animations are ready.
+    document.body.setAttribute('data-animation-state', 'booted');
     document.documentElement.classList.add('port-ready');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

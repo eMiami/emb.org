@@ -505,6 +505,12 @@ def main():
         h = transform(page, url, site)
         if out == "portfolio":
             h = portfolio_additions(h)
+        if out in ("", "emb"):
+            # Homepage logo slideshow morphs between logos (texture from tools/morph_sdf.py).
+            h, n = re.subn(r'<div\s+class="gallery-slideshow"', '<div data-port-morph="/assets/img/home-morph/logos-sdf.png" '
+                           'data-port-morph-pad="0.14" class="gallery-slideshow"', h, count=1)
+            if n != 1:
+                raise SystemExit("home: logo slideshow not found")
         write(f"{out}/index.html" if out else "index.html", h)
     if not only or "404" in only:
         print("port 404 page")
