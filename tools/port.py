@@ -511,6 +511,8 @@ def main():
                            'data-port-morph-pad="0.14" class="gallery-slideshow"', h, count=1)
             if n != 1:
                 raise SystemExit("home: logo slideshow not found")
+            # Eli replaced the lotus with design option D4 (also used when the morph can't run).
+            h = h.replace("/assets/img/lotus-black-7c4f5799/", "/assets/img/lotus-d4/").replace('alt="lotus-black.png"', 'alt="Lotus"')
         write(f"{out}/index.html" if out else "index.html", h)
     if not only or "404" in only:
         print("port 404 page")

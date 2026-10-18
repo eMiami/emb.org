@@ -16,10 +16,10 @@ from scipy.ndimage import distance_transform_edt
 
 ROOT = Path(__file__).resolve().parent.parent
 IMG = ROOT / "docs/assets/img"
-LOGOS = [  # display order: geometric monogram -> rounded knot -> organic dragon
+LOGOS = [  # display order (Eli's pick): monogram -> dragon -> lotus (design option D4)
     IMG / "emb-810d67df/1500.png",
-    IMG / "lotus-black-7c4f5799/964.png",
     IMG / "dragon-ea20b9d5/1500.png",
+    IMG / "lotus-d4/orig.png",
 ]
 OUT = IMG / "home-morph/logos-sdf.png"
 SIZE = 1024   # texture size
