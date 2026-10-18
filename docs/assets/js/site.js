@@ -297,7 +297,9 @@
     var sized = $('.gallery-slideshow-wrapper', root);
     function size() {
       if (window.matchMedia('(max-width: ' + (BP.md - 1) + 'px)').matches) {
-        root.style.height = '100vw';
+        // The homepage logo is kept smaller on phones so the name and social icons fit on screen.
+        root.style.height = root.hasAttribute('data-port-morph')
+          ? (CSS.supports('height', '1svh') ? 'min(72vw, 42svh)' : 'min(72vw, 42vh)') : '100vw';
         root.style.maxWidth = 'var(--maxPageWidth)';
       } else {
         root.style.height = 'calc(' + (p.galleryHeight || 75) + 'vh + (var(--pagePadding) * 2))';

@@ -28,3 +28,10 @@
 /* Homepage logo morph (canvas replaces the slides when WebGL is available). */
 .port-morph-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 .port-morph-on .gallery-slideshow-item { visibility: hidden !important; }
+
+/* Homepage on phones: the original hid overflow and put 90px above the footer, which pushed
+   the social icons off the bottom of most screens. Keep them on screen (and reachable). */
+@media screen and (max-width: 767px) {
+  body.homepage { overflow: visible; }
+  body.homepage footer#footer-sections { margin-top: 24px; }
+}
