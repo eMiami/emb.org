@@ -17,7 +17,7 @@ Static copy of Eli Blatt's site, moved off Squarespace. Served by GitHub Pages f
 - `tools/port.py` re-runs the whole export from the live Squarespace sites. It only works
   while those sites are still up; after that, edit `docs/` directly.
 
-## Live at emb.org (switched 2026-10-17)
+## Live at emb.org (switched 2026-10-18)
 
 GoDaddy DNS for emb.org: the four `@` A records point at GitHub Pages
 (185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153) and `www` is a CNAME to
@@ -28,4 +28,7 @@ To roll back to Squarespace (only while that subscription is still active): set 
 back to 198.185.159.144, 198.185.159.145, 198.49.23.144, 198.49.23.145 and `www` back to
 `ext-cust.squarespace.com`.
 
-Squarespace (emb.org and padelspot.com) can be cancelled once the site is confirmed at emb.org.
+The emb.org Squarespace plan was cancelled on 2026-10-18; it stays active (unused) until 2027-06-28,
+so rolling back is possible until then. padelspot.com is on a separate Squarespace login and its
+DNS (including Google mail MX records) is hosted by Squarespace; move that to GoDaddy before its
+plan ends or padelspot.com email stops.
