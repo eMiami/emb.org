@@ -29,7 +29,15 @@ back to 198.185.159.144, 198.185.159.145, 198.49.23.144, 198.49.23.145 and `www`
 `ext-cust.squarespace.com`.
 
 Both Squarespace plans are cancelled (2026-10-18), nothing renews: emb.org stays up (unused) until
-2027-06-28, so rolling back is possible until then; padelspot.com's Squarespace site runs until
-2027-01-14 and then goes offline. padelspot.com's registration is in a different GoDaddy account
-(renews 2027-05-18); its email bounces (the old PadelSpot Google Workspace has no subscription).
-The PadelSpot contact form on emb.org opens an email to e@emb.org in the visitor's mail app.
+2027-06-28, so rolling back is possible until then. The PadelSpot Squarespace site is no longer
+used (it lapses 2027-01-14).
+
+## padelspot.com (redirected 2026-10-31)
+
+Every padelspot.com address, `/invest` included, lands on `/portfolio/padelspot/` here. That is
+done by a separate tiny Pages site, repo `eMiami/padelspot.com` (branch `site`), because GoDaddy's
+own forwarding only handles the bare domain (any path 404s). padelspot.com now uses GoDaddy's
+default nameservers, with the same four `@` A records and `www` → `emiami.github.io`. It has no MX
+records, so mail to padelspot.com fails (it bounced before too; the old Google Workspace has no
+subscription). The PadelSpot contact form on emb.org opens an email to e@emb.org in the visitor's
+mail app. Registration renews 2027-05-18.
