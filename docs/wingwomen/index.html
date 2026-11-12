@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Wingwomen — demo</title>
+<meta name="description" content="A clickable demo of Wingwomen, introductions from Miami matchmakers who know the people they introduce.">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<div class="stage">
+  <aside class="side">
+    <p class="side-mark">Wingwomen</p>
+    <h1 class="side-title">A clickable demo</h1>
+    <p class="side-copy">Introductions from Miami matchmakers who know the people they introduce. Try it from each side. Everything here is sample data; nothing is sent anywhere.</p>
+    <div class="side-roles" role="group" aria-label="Try it as">
+      <button type="button" data-role="candidate">An invited woman</button>
+      <button type="button" data-role="client">A client</button>
+      <button type="button" data-role="matchmaker">A matchmaker</button>
+    </div>
+    <button type="button" class="side-reset" data-reset>Start over</button>
+  </aside>
+  <div class="phone" aria-label="Simulated iPhone">
+    <div class="phone-screen">
+      <div class="status" aria-hidden="true"><span data-clock>9:41</span><span class="island"></span><span class="status-icons"><i></i><i></i><i></i></span></div>
+      <div class="notif" role="status" aria-live="polite" hidden>
+        <button type="button" class="notif-card" data-notif>
+          <span class="notif-app">Messages · now</span>
+          <span class="notif-body"></span>
+        </button>
+      </div>
+      <main class="app" id="app" tabindex="-1"></main>
+      <div class="home-bar" aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+<script src="demo.js"></script>
+</body>
+</html>
