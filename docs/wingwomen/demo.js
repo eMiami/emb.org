@@ -39,7 +39,7 @@
     return '<div class="strip">' + out + "</div>";
   };
   var top = function (back) {
-    return '<div class="topbar"><button type="button" class="wordmark tap-plain" data-pick aria-label="Wingwoman — choose who to try it as">Wingwoman</button>' + (back ? '<button type="button" class="back" data-back>Back</button>' : "") + "</div>";
+    return '<div class="topbar"><button type="button" class="wordmark tap-plain" data-pick aria-label="Wingwoman — choose who to try it as">Wingwoman™</button>' + (back ? '<button type="button" class="back" data-back>Back</button>' : "") + "</div>";
   };
   var verified = '<span class="chip positive">&#10003; Verified</span>';
   var candidateCard = function () {
@@ -53,7 +53,7 @@
   // ── screens ──────────────────────────────────────────────
   var SCREENS = {
     PICK: function () {
-      return '<span class="wordmark">Wingwoman</span><span class="eyebrow">A clickable demo</span><h1 class="hero">Try it from each side.</h1>' +
+      return '<span class="wordmark">Wingwoman™</span><span class="eyebrow">A clickable demo</span><h1 class="hero">Try it from each side.</h1>' +
         '<p class="lede">Introductions from Miami matchmakers who know the people they introduce. Sample data only; nothing is sent anywhere.</p>' +
         '<button class="btn" data-role="candidate">As an invited woman</button><button class="btn secondary" data-role="client">As a client</button><button class="btn secondary" data-role="matchmaker">As a matchmaker</button>' +
         '<p class="tiny">Tap the Wingwoman name at the top of any screen to come back here.</p>';
