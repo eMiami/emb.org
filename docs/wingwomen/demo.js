@@ -1,4 +1,4 @@
-// Wingwomen clickable demo. Sample data only; nothing leaves the page.
+// Wingwoman clickable demo. Sample data only; nothing leaves the page.
 (function () {
   "use strict";
   var app = document.getElementById("app");
@@ -39,7 +39,7 @@
     return '<div class="strip">' + out + "</div>";
   };
   var top = function (back) {
-    return '<div class="topbar"><button type="button" class="wordmark tap-plain" data-pick aria-label="Wingwomen — choose who to try it as">Wingwomen</button>' + (back ? '<button type="button" class="back" data-back>Back</button>' : "") + "</div>";
+    return '<div class="topbar"><button type="button" class="wordmark tap-plain" data-pick aria-label="Wingwoman — choose who to try it as">Wingwoman</button>' + (back ? '<button type="button" class="back" data-back>Back</button>' : "") + "</div>";
   };
   var verified = '<span class="chip positive">&#10003; Verified</span>';
   var candidateCard = function () {
@@ -53,10 +53,10 @@
   // ── screens ──────────────────────────────────────────────
   var SCREENS = {
     PICK: function () {
-      return '<span class="wordmark">Wingwomen</span><span class="eyebrow">A clickable demo</span><h1 class="hero">Try it from each side.</h1>' +
+      return '<span class="wordmark">Wingwoman</span><span class="eyebrow">A clickable demo</span><h1 class="hero">Try it from each side.</h1>' +
         '<p class="lede">Introductions from Miami matchmakers who know the people they introduce. Sample data only; nothing is sent anywhere.</p>' +
         '<button class="btn" data-role="candidate">As an invited woman</button><button class="btn secondary" data-role="client">As a client</button><button class="btn secondary" data-role="matchmaker">As a matchmaker</button>' +
-        '<p class="tiny">Tap the Wingwomen name at the top of any screen to come back here.</p>';
+        '<p class="tiny">Tap the Wingwoman name at the top of any screen to come back here.</p>';
     },
     // Candidate
     L1: function () {
@@ -73,7 +73,7 @@
       return top(true) + '<div class="stack"><span class="eyebrow">Step 1 of 3</span><h1>Confirm it\'s you</h1><p class="muted">Your number stays private. It\'s how you\'ll hear about introductions.</p></div>' +
         '<div class="field"><label for="ph">Mobile number</label><input id="ph" value="(305) 555-0142" inputmode="tel"></div>' +
         '<div class="field"><label for="dob">Date of birth</label><input id="dob" value="04/10/1993"></div>' +
-        '<label class="check"><input type="checkbox" checked><span>I agree that Wingwomen may show the profile I approve only to clients Maya proposes me to.</span></label>' +
+        '<label class="check"><input type="checkbox" checked><span>I agree that Wingwoman may show the profile I approve only to clients Maya proposes me to.</span></label>' +
         '<div class="field"><label for="code">Code we texted you</label><input id="code" value="482 913" inputmode="numeric"></div>' +
         '<button class="btn" data-go="L3">Verify</button>' + hint("the code is filled in for you");
     },
@@ -265,12 +265,12 @@
   var ACTIONS = {
     addPhoto: function () { S.cand.photos = Math.min(4, S.cand.photos + 1); render(); },
     toApprove: function () { if (!S.cand.photos) S.cand.photos = 1; go("L4"); },
-    approve: function () { S.cand.approved = true; go("L5"); text("Wingwomen: Maya has an introduction for you. Take a look and answer within 72 hours.", "L6"); },
+    approve: function () { S.cand.approved = true; go("L5"); text("Wingwoman: Maya has an introduction for you. Take a look and answer within 72 hours.", "L6"); },
     join: function () { go("C9"); },
     openMm: function (el) { S.client.viewing = el.dataset.id; go("C7"); },
     requestInterview: function () { S.client.interview = S.client.viewing; render(); },
-    fastForward: function () { S.client.matched = true; S.history = []; go("C9", true); text("Wingwomen: Maya has a new proposal for you.", "C10"); },
-    requestIntro: function () { S.client.requested = true; go("C11"); text("Wingwomen: Good news — Ana accepted. Her details are waiting.", "C12", 2600); },
+    fastForward: function () { S.client.matched = true; S.history = []; go("C9", true); text("Wingwoman: Maya has a new proposal for you.", "C10"); },
+    requestIntro: function () { S.client.requested = true; go("C11"); text("Wingwoman: Good news — Ana accepted. Her details are waiting.", "C12", 2600); },
     invite: function () { S.mm.invites++; S.history = []; go("M6", true); },
     propose: function () { S.mm.proposals++; S.history = []; go("M3", true); },
   };
