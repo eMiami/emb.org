@@ -10,7 +10,7 @@
 <link rel="icon" href="flamingo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;600&family=Instrument+Serif:ital@0;1&family=Jost:wght@300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="wp.css?v=3">
+<link rel="stylesheet" href="wp.css?v=5">
 <style>
   /* typographic image panels (Samuel's photography drops in here) */
   .panel{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 80% 10%,#2a2324 0%,#141212 55%,#0B0A0A 100%)}
@@ -137,6 +137,7 @@
         <button role="tab" aria-selected="false" data-tab="dm">Messages</button>
         <button role="tab" aria-selected="false" data-tab="host">Host · Applications</button>
         <button role="tab" aria-selected="false" data-tab="guests">Host · Guest lists</button>
+        <button role="tab" aria-selected="false" data-tab="partner">Partner view (Pass)</button>
       </div>
       <div class="pane" data-pane="inbox"><ul class="list" data-inbox></ul></div>
       <div class="pane" data-pane="dm" hidden>
@@ -155,6 +156,14 @@
         <div class="field" style="max-width:420px"><label for="g-ev">Event</label><select id="g-ev" data-guest-ev></select></div>
         <ul class="list" data-guestlist style="margin-top:12px"></ul>
         <div class="ctas"><button class="btn line" data-export>Export guest list (CSV)</button><button class="btn ghost" data-blast>Send update to guests</button></div>
+      </div>
+      <div class="pane" data-pane="partner" hidden>
+        <p class="muted" style="max-width:640px;margin-top:0">This is what an outside organizer sees when Samuel promotes their event to the list: sales, payouts and a working door list. Never an email or a phone number. Buy a ticket to a Partner event above, then find yourself here.</p>
+        <div class="field" style="max-width:460px"><label for="p-ev">Partner event</label><select id="p-ev" data-partner-ev></select></div>
+        <div class="stat-row" data-pstats style="margin-top:16px"></div>
+        <form class="composer" data-door style="max-width:460px"><input aria-label="Ticket code" placeholder="Scan or type a ticket code (WPL-…)" data-door-code><button class="btn sm" type="submit">Check</button></form>
+        <ul class="list" data-plist style="margin-top:12px"></ul>
+        <div class="ctas"><button class="btn line" data-pmsg>Message ticket holders</button></div>
       </div>
     </div>
   </section>
@@ -195,6 +204,6 @@
 <div class="scrim" data-scrim></div>
 <aside class="drawer" role="dialog" aria-modal="true" aria-label="Event details" data-drawer></aside>
 <div class="toast" role="status" aria-live="polite" data-toast></div>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

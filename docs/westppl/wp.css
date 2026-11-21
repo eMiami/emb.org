@@ -128,7 +128,7 @@ section{padding:56px 0}
 .guests{display:flex;margin:14px 0 4px}
 .guests span{width:30px;height:30px;border-radius:50%;border:2px solid var(--ink-raised);margin-right:-8px;background:#2f2b2a center/cover;filter:grayscale(1)}
 .rsvp-done{border:1px solid var(--members);color:var(--members);padding:14px;font-size:14px;margin-top:14px}
-.share{background:none;border:0;color:var(--smoke);text-decoration:underline;font-size:13px;padding:10px 0}
+.share{background:none;border:0;color:var(--smoke);text-decoration:underline;font-size:13px;padding:10px 0;margin-right:18px}
 
 /* forms */
 .form{display:grid;gap:16px;max-width:620px}
@@ -188,3 +188,8 @@ footer a{display:block;text-decoration:none;padding:4px 0}
 .toast.show{transform:translateX(-50%)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* West Ppl Pass */
+.pass-note{border:1px solid var(--line);padding:14px;font-size:13px;line-height:1.5;margin:0 0 14px;color:var(--smoke)}
+.pass-note b{display:block;font:600 10px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--flamingo);margin-bottom:4px}
+.pass-ticket{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border:1px solid var(--members);padding:14px;margin-top:6px}

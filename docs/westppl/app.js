@@ -23,10 +23,12 @@
     { id: "art-week", city: "miami", title: "Art Week: West Ppl House", date: "2026-12-04T18:00", end: "01:00", where: "A rented house in Miami Beach", access: "members", mode: "approval", cap: 200, taken: 164, price: 45, host: "West Ppl", blurb: "Our home base for Art Week. Open bar until ten, a listening room upstairs, and a garden for the people you came to see. Members get priority; guests pay the door rate." },
     { id: "golden-hour", city: "miami", title: "Rooftop Golden Hour", date: "2026-12-05T17:00", end: "21:00", where: "A Brickell rooftop", access: "public", mode: "instant", cap: 150, taken: 97, price: 35, host: "West Ppl", blurb: "Sunset, a DJ who reads the room, and a crowd you'll want to stay for. Open to the public, members free." },
     { id: "sunset-sunset", city: "la", title: "Sunset on Sunset", date: "2026-12-06T17:30", end: "21:30", where: "A hotel terrace in West Hollywood", access: "public", mode: "instant", cap: 80, taken: 80, price: 0, host: "West Ppl LA", blurb: "Our LA launch drinks. Free with RSVP. It's full, but the waitlist moves." },
+    { id: "rooftop-cinema", city: "nyc", title: "Rooftop Cinema: In the Mood for Love", date: "2026-12-10T19:30", end: "22:30", where: "A Chelsea rooftop (heated, blankets provided)", access: "public", mode: "instant", cap: 120, taken: 74, price: 28, listPrice: 38, perk: "a glass of wine on arrival", host: "Third Floor Cinema Club", partner: "Third Floor Cinema Club", blurb: "A partner event, hand-picked for the list. Wong Kar-wai under the heaters, wine from a natural importer, and a crowd that actually watches the film. Tickets are sold through West Ppl Pass." },
     { id: "holiday-table", city: "nyc", title: "Holiday Table", date: "2026-12-12T19:30", end: "23:00", where: "A townhouse in the West Village", access: "members", mode: "approval", cap: 40, taken: 12, price: 85, host: "Samuel", blurb: "A long, loud, candlelit dinner before everyone scatters for the holidays." },
     { id: "canyon", city: "la", title: "Canyon Breakfast Club", date: "2026-12-13T08:30", end: "11:00", where: "Runyon Canyon trailhead, then breakfast", access: "public", mode: "instant", cap: 40, taken: 21, price: 0, host: "West Ppl LA", blurb: "A walk up, a long breakfast after. Bring a friend who has never been." },
+    { id: "bungalow-jazz", city: "la", title: "Bungalow Sessions: Late Jazz", date: "2026-12-18T21:00", end: "00:30", where: "A bungalow off Sunset Blvd", access: "public", mode: "instant", cap: 90, taken: 41, price: 40, listPrice: 55, perk: "reserved seating near the trio", host: "Bungalow Sessions", partner: "Bungalow Sessions", blurb: "A trio, a small room and a bar that does one cocktail very well. A partner event sold through West Ppl Pass: the organizers get a full room, and your details stay with West Ppl." },
     { id: "nyd-swim", city: "miami", title: "New Year's Day Swim", date: "2027-01-01T11:00", end: "14:00", where: "South Pointe", access: "members", mode: "instant", cap: 60, taken: 18, price: 0, host: "West Ppl", blurb: "Start the year in the ocean. Coffee, juice and towels on us." },
-    { id: "afterglow-preview", city: "miami", title: "Afterglow Preview: Sunset Session", date: "2027-01-23T16:00", end: "00:00", where: "Waterfront venue, Miami (announced to members first)", access: "public", mode: "instant", cap: 1000, taken: 286, price: 60, host: "Afterglow × West Ppl", afterglow: true, blurb: "A first look at Afterglow, the 4pm-to-midnight electronic music series. Local DJs through golden hour, a headliner after dark, and home by midnight. West Ppl members get the presale and member pricing." }
+    { id: "afterglow-preview", city: "miami", title: "Afterglow Preview: Sunset Session", date: "2027-01-23T16:00", end: "00:00", where: "Waterfront venue, Miami (announced to members first)", access: "public", mode: "instant", cap: 1000, taken: 286, price: 60, listPrice: 80, perk: "48-hour presale and a members' bar", host: "Afterglow × West Ppl", partner: "Afterglow Electronic", afterglow: true, blurb: "A first look at Afterglow, the 4pm-to-midnight electronic music series. Local DJs through golden hour, a headliner after dark, and home by midnight. West Ppl members get the presale and member pricing." }
   ];
 
   var rsvps = store.get("rsvps", {});
@@ -34,6 +36,27 @@
   var t12 = function (hm) { var p = hm.split(":"), h = +p[0], ap = h >= 12 && h < 24 ? "PM" : "AM"; h = h % 12 || 12; return h + ":" + p[1] + " " + ap; };
   var seatsLeft = function (e) { return Math.max(0, e.cap - e.taken - (rsvps[e.id] ? 1 : 0)); };
 
+  function codeFor(e) { var h = 0, s = e.id + (applied ? applied.email : "guest"); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return "WPL-" + h.toString(36).toUpperCase().slice(0, 6); }
+  function qr(code) {
+    var n = 25, cells = "", h = 2166136261;
+    for (var i = 0; i < code.length; i++) { h ^= code.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    var rnd = function () { h ^= h << 13; h >>>= 0; h ^= h >> 17; h ^= h << 5; h >>>= 0; return h / 4294967296; };
+    var finder = function (x, y) { return '<rect x="' + x + '" y="' + y + '" width="7" height="7"/><rect x="' + (x + 1) + '" y="' + (y + 1) + '" width="5" height="5" fill="#fff"/><rect x="' + (x + 2) + '" y="' + (y + 2) + '" width="3" height="3"/>'; };
+    for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) {
+      var inF = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
+      if (!inF && rnd() > 0.52) cells += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    }
+    return '<svg viewBox="-2 -2 ' + (n + 4) + ' ' + (n + 4) + '" width="148" height="148" shape-rendering="crispEdges" style="background:#fff;display:block" aria-label="Ticket code ' + code + '"><g fill="#0B0A0A">' + cells + finder(0, 0) + finder(n - 7, 0) + finder(0, n - 7) + '</g></svg>';
+  }
+  function passNote(e) {
+    if (!e.price && !e.partner) return "";
+    var deal = e.listPrice ? '<span style="display:block;color:var(--paper);margin-bottom:6px">West Ppl price <b style="display:inline;font:inherit;letter-spacing:0;text-transform:none;color:var(--flamingo)">$' + e.price + '</b> (public $' + e.listPrice + ')' + (e.perk ? ', plus ' + esc(e.perk) : "") + '.</span>' : "";
+    return '<div class="pass-note"><b>West Ppl Pass</b>' + deal + (e.partner ? "Presented by " + esc(e.partner) + ". " : "") + 'Your ticket and QR code come from West Ppl. ' + (e.partner ? "The organizer sees your first name and party size at the door, never your email or number. Updates reach you through West Ppl." : "One tap with Apple Pay, add it to your Wallet.") + '</div>';
+  }
+  function ticketBlock(e) {
+    var c = codeFor(e);
+    return '<div class="pass-ticket"><div>' + qr(c) + '</div><div><p class="eyebrow" style="margin-bottom:6px">Your ticket</p><div style="font:400 22px/1.1 var(--display);text-transform:uppercase">' + esc(e.title) + '</div><div class="muted" style="font-size:13px;margin:6px 0">' + fmt(e.date).long + ' · ' + fmt(e.date).time + '</div><div style="font:600 13px/1 var(--sans);letter-spacing:.12em">' + c + '</div><button class="share" data-wallet>Add to Apple Wallet</button></div></div><p class="note" style="font-size:12px;color:var(--smoke);margin:6px 0 0">Sample ticket: the code is illustrative, not scannable.</p>';
+  }
   function toast(msg) { var t = $("[data-toast]"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove("show"); }, 2600); }
 
   /* menu */
@@ -62,8 +85,9 @@
   function tagsFor(e) {
     var t = [];
     if (e.afterglow) t.push('<span class="tag ticket">Afterglow</span>');
+    else if (e.partner) t.push('<span class="tag">Partner</span>');
     t.push(e.access === "members" ? '<span class="tag members">Members</span>' : '<span class="tag">Public</span>');
-    if (e.price) t.push('<span class="tag ticket">$' + e.price + '</span>');
+    if (e.price) t.push('<span class="tag ticket">$' + e.price + (e.listPrice ? ' <s style="opacity:.6">$' + e.listPrice + '</s>' : "") + '</span>');
     if (rsvps[e.id]) t.push('<span class="tag members">' + (rsvps[e.id] === "waitlist" ? "Waitlisted" : rsvps[e.id] === "requested" ? "Requested" : "Going") + '</span>');
     else if (!seatsLeft(e)) t.push('<span class="tag full">Waitlist</span>');
     return t.join("");
@@ -89,19 +113,21 @@
     var f = fmt(e.date), c = cityOf(e.city), left = seatsLeft(e), mine = rsvps[e.id];
     var pct = Math.min(100, Math.round(100 * (e.cap - left) / e.cap));
     var cta;
-    if (mine) cta = '<div class="rsvp-done">' + (mine === "waitlist" ? "You're on the waitlist. We'll text you if a spot opens." : mine === "requested" ? "Request sent. Samuel approves the guest list personally; you'll hear within a day." : "You're going. It's in your Invitations, and we'll send the address the morning of.") + '</div><button class="share" data-cancel>Cancel my RSVP</button>';
+    if (mine === "going" && (e.price || e.partner)) cta = ticketBlock(e) + '<button class="share" data-cancel>Cancel and refund</button>';
+    else if (mine) cta = '<div class="rsvp-done">' + (mine === "waitlist" ? "You're on the waitlist. We'll text you if a spot opens." : mine === "requested" ? "Request sent. Samuel approves the guest list personally; you'll hear within a day." : "You're going. It's in your Invitations, and we'll send the address the morning of.") + '</div><button class="share" data-cancel>Cancel my RSVP</button>';
     else if (!left) cta = '<button class="btn line" style="width:100%" data-rsvp="waitlist">Join the waitlist</button>';
     else cta = '<button class="btn" style="width:100%" data-rsvp="' + (e.mode === "approval" ? "requested" : "going") + '">' + (e.mode === "approval" ? "Request to attend" : e.price ? "Get a ticket · $" + e.price : "RSVP") + '</button>';
     var accent = e.afterglow ? ' style="--flamingo:var(--sunset)"' : "";
-    drawer.innerHTML = '<button class="close" aria-label="Close" data-close>×</button><div class="ph panel" style="aspect-ratio:16/10"><span class="coord">' + c.coord + '</span>' + FL.replace("<svg ", '<svg class="fl" ' + (e.afterglow ? 'style="filter:hue-rotate(-25deg) saturate(1.4)" ' : "")) + '<span class="big">' + esc(c.name.split(" ")[1]) + '</span></div><div class="body"' + accent + '><p class="eyebrow">' + esc(c.name) + ' · ' + esc(c.city) + '</p><h2 class="d-h2" style="font-size:36px">' + esc(e.title) + '</h2><div class="tags" style="display:flex;gap:6px;margin-top:12px">' + tagsFor(e) + '</div><p style="margin:16px 0 0">' + esc(e.blurb) + '</p><dl class="facts"><dt>When</dt><dd>' + f.long + ', ' + f.time + ' – ' + t12(e.end) + '</dd><dt>Where</dt><dd>' + esc(e.access === "members" ? "Address shared with confirmed guests" : e.where) + '</dd><dt>Host</dt><dd>' + esc(e.host) + '</dd><dt>RSVP</dt><dd>' + (e.mode === "approval" ? "Host approves each guest" : "Instant") + '</dd></dl><div class="muted" style="font-size:13px">' + (left ? left + " of " + e.cap + " spots left" : "Full. Waitlist open") + '</div><div class="cap"><i style="width:' + pct + '%"></i></div><div class="guests" aria-hidden="true">' + "<span></span>".repeat(6) + '</div><p class="muted" style="font-size:13px;margin:4px 0 18px">' + (e.taken > 6 ? "Including people you know from the Long Table" : "Be one of the first") + '</p>' + cta + '<button class="share" data-share>Copy event link</button></div>';
+    drawer.innerHTML = '<button class="close" aria-label="Close" data-close>×</button><div class="ph panel" style="aspect-ratio:16/10"><span class="coord">' + c.coord + '</span>' + FL.replace("<svg ", '<svg class="fl" ' + (e.afterglow ? 'style="filter:hue-rotate(-25deg) saturate(1.4)" ' : "")) + '<span class="big">' + esc(c.name.split(" ")[1]) + '</span></div><div class="body"' + accent + '><p class="eyebrow">' + esc(c.name) + ' · ' + esc(c.city) + '</p><h2 class="d-h2" style="font-size:36px">' + esc(e.title) + '</h2><div class="tags" style="display:flex;gap:6px;margin-top:12px">' + tagsFor(e) + '</div><p style="margin:16px 0 0">' + esc(e.blurb) + '</p><dl class="facts"><dt>When</dt><dd>' + f.long + ', ' + f.time + ' – ' + t12(e.end) + '</dd><dt>Where</dt><dd>' + esc(e.access === "members" ? "Address shared with confirmed guests" : e.where) + '</dd><dt>Host</dt><dd>' + esc(e.host) + '</dd><dt>RSVP</dt><dd>' + (e.mode === "approval" ? "Host approves each guest" : "Instant") + '</dd></dl><div class="muted" style="font-size:13px">' + (left ? left + " of " + e.cap + " spots left" : "Full. Waitlist open") + '</div><div class="cap"><i style="width:' + pct + '%"></i></div><div class="guests" aria-hidden="true">' + "<span></span>".repeat(6) + '</div><p class="muted" style="font-size:13px;margin:4px 0 18px">' + (e.taken > 6 ? "Including people you know from the Long Table" : "Be one of the first") + '</p>' + passNote(e) + cta + '<button class="share" data-share>Copy event link</button></div>';
     drawer.classList.add("open"); scrim.classList.add("open"); document.body.style.overflow = "hidden";
     history.replaceState(null, "", "#event/" + e.id);
     $("[data-close]", drawer).focus();
     $("[data-close]", drawer).addEventListener("click", closeEvent);
     var r = $("[data-rsvp]", drawer);
-    if (r) r.addEventListener("click", function () { rsvps[e.id] = r.getAttribute("data-rsvp"); store.set("rsvps", rsvps); toast(rsvps[e.id] === "going" ? "You're on the list." : rsvps[e.id] === "requested" ? "Request sent to the host." : "Added to the waitlist."); renderEvents(); renderInbox(); renderGuests(); openEvent(e.id); });
+    if (r) r.addEventListener("click", function () { rsvps[e.id] = r.getAttribute("data-rsvp"); store.set("rsvps", rsvps); toast(rsvps[e.id] === "going" ? (e.price ? "Paid. Your ticket is ready." : "You're on the list.") : rsvps[e.id] === "requested" ? "Request sent to the host." : "Added to the waitlist."); renderEvents(); renderInbox(); renderGuests(); renderPartner(); openEvent(e.id); });
+    var wl = $("[data-wallet]", drawer); if (wl) wl.addEventListener("click", function () { toast("Demo: this adds the pass to Apple or Google Wallet."); });
     var cx = $("[data-cancel]", drawer);
-    if (cx) cx.addEventListener("click", function () { delete rsvps[e.id]; store.set("rsvps", rsvps); toast("RSVP cancelled. Your spot went to the waitlist."); renderEvents(); renderInbox(); renderGuests(); openEvent(e.id); });
+    if (cx) cx.addEventListener("click", function () { delete rsvps[e.id]; store.set("rsvps", rsvps); toast("RSVP cancelled. Your spot went to the waitlist."); renderEvents(); renderInbox(); renderGuests(); renderPartner(); openEvent(e.id); });
     $("[data-share]", drawer).addEventListener("click", function () {
       var url = location.href.split("#")[0] + "#event/" + e.id;
       (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { toast("Link copied. It opens straight to this event."); }, function () { toast(url); });
@@ -219,12 +245,41 @@
   });
   $("[data-blast]").addEventListener("click", function () { toast("Update queued to every confirmed guest (demo: nothing sent)."); });
 
+  /* partner view: what an outside organizer sees on West Ppl Pass */
+  var pSel = $("[data-partner-ev]");
+  var PARTNER_EVS = EVENTS.filter(function (e) { return e.partner; });
+  pSel.innerHTML = PARTNER_EVS.map(function (e) { return '<option value="' + e.id + '">' + esc(e.partner) + ' · ' + esc(e.title) + '</option>'; }).join("");
+  var scanned = store.get("scanned", {});
+  function partnerGuests(e) {
+    var g = [], n = Math.min(e.taken, 9);
+    for (var i = 0; i < n; i++) { var nm = NAMES[(i * 3 + e.id.length) % NAMES.length].split(" "); g.push({ name: nm[0] + " " + nm[1][0] + ".", party: i % 3 === 0 ? 2 : 1, code: "WPL-" + ((i + 7) * 2654435761 >>> 0).toString(36).toUpperCase().slice(0, 6) }); }
+    if (rsvps[e.id] === "going") g.unshift({ name: applied ? applied.name.split(" ")[0] + " " + (applied.name.split(" ")[1] || "")[0] + "." : "You", party: 1, code: codeFor(e) });
+    return g;
+  }
+  function renderPartner() {
+    var e = EVENTS.filter(function (x) { return x.id === pSel.value; })[0]; if (!e) return;
+    var g = partnerGuests(e), sold = e.taken + (rsvps[e.id] ? 1 : 0), gross = sold * e.price, fee = Math.round(gross * 0.12), inn = g.filter(function (x) { return scanned[x.code]; }).length;
+    $("[data-pstats]").innerHTML = [[sold, "Tickets sold"], [inn, "Checked in"], ["$" + (gross - fee).toLocaleString("en-US"), "Your payout"], [0, "Emails you can see"]].map(function (s) { return '<div class="stat"><b>' + s[0] + '</b><span>' + s[1] + '</span></div>'; }).join("");
+    $("[data-plist]").innerHTML = g.map(function (x) { return '<li><span class="av"></span><div class="grow"><div class="t">' + esc(x.name) + (x.party > 1 ? ' <span class="tag">Party of ' + x.party + '</span>' : "") + '</div><div class="s">' + x.code + ' · contact held by West Ppl</div></div>' + (scanned[x.code] ? '<span class="tag members">In</span>' : '<button class="btn sm ghost" data-scan="' + x.code + '">Check in</button>') + '</li>'; }).join("");
+    $$("[data-scan]").forEach(function (b) { b.addEventListener("click", function () { scanned[b.getAttribute("data-scan")] = 1; store.set("scanned", scanned); toast("Valid ticket. Checked in."); renderPartner(); }); });
+  }
+  pSel.addEventListener("change", renderPartner);
+  $("[data-door]").addEventListener("submit", function (ev) {
+    ev.preventDefault(); var v = $("[data-door-code]").value.trim().toUpperCase(), e = EVENTS.filter(function (x) { return x.id === pSel.value; })[0];
+    var hit = partnerGuests(e).filter(function (x) { return x.code === v; })[0];
+    if (!hit) toast("Not a valid ticket for this event.");
+    else if (scanned[v]) toast(hit.name + " is already checked in.");
+    else { scanned[v] = 1; store.set("scanned", scanned); toast("Valid: " + hit.name + (hit.party > 1 ? ", party of " + hit.party : "") + "."); renderPartner(); }
+    $("[data-door-code]").value = "";
+  });
+  $("[data-pmsg]").addEventListener("click", function () { toast("Sent to every ticket holder through West Ppl. Their contact details stay hidden."); });
+
   /* tabs */
   $$("[data-tab]").forEach(function (b) { b.addEventListener("click", function () {
     $$("[data-tab]").forEach(function (x) { x.setAttribute("aria-selected", x === b); });
     $$("[data-pane]").forEach(function (p) { p.hidden = p.getAttribute("data-pane") !== b.getAttribute("data-tab"); });
   }); });
 
-  renderEvents(); renderInbox(); renderPeople(); renderThread(); renderApps(); renderGuests();
+  renderEvents(); renderInbox(); renderPeople(); renderThread(); renderApps(); renderGuests(); renderPartner();
   var m = location.hash.match(/^#event\/([\w-]+)/); if (m) openEvent(m[1]);
 })();
