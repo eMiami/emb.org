@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>West Ppl — The Plan</title>
+<meta name="description" content="How West Ppl becomes a platform and a living: what to build first, what to do with an 8,000-person list, and how it fits with Afterglow.">
+<link rel="icon" href="flamingo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;600&family=Instrument+Serif:ital@0;1&family=Jost:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="wp.css?v=3">
+<style>
+  .doc{display:grid;gap:40px}
+  @media(min-width:1000px){.doc{grid-template-columns:220px 1fr;gap:64px}}
+  .toc{display:none}
+  @media(min-width:1000px){.toc{display:block;position:sticky;top:96px;align-self:start;font-size:14px}}
+  .toc a{display:block;padding:6px 0;text-decoration:none;color:var(--smoke)}
+  .toc a:hover{color:var(--paper)}
+  .doc section{padding:0 0 64px;border-bottom:1px solid var(--line);margin-bottom:56px}
+  .doc section:last-child{border-bottom:0}
+  .doc h2{margin-bottom:18px}
+  .doc h3{font:400 26px/1.2 var(--serif);font-style:italic;margin:32px 0 10px}
+  .doc p,.doc li{max-width:720px}
+  .doc ul.plain{padding-left:20px}
+  .doc ul.plain li{margin:6px 0}
+  .tl{border-collapse:collapse;width:100%;font-size:15px;margin:16px 0}
+  .tl th,.tl td{text-align:left;padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  .tl th{font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--smoke)}
+  .tl td.n,.tl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tl tr.total td{font-weight:600;border-top:2px solid var(--paper)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cards{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0}
+  @media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+  .cards>div{background:var(--ink);padding:22px}
+  .cards h4{font:400 24px/1 var(--display);text-transform:uppercase;margin:0 0 6px}
+  .cards .price{font:italic 400 22px/1.2 var(--serif);color:var(--flamingo);margin-bottom:10px}
+  .cards ul{padding-left:18px;margin:0;font-size:15px}
+  .big-num{font:400 clamp(44px,7vw,72px)/.9 var(--display)}
+  .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0}
+  @media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}}
+  .kpis>div{background:var(--ink);padding:18px}
+  .kpis span{display:block;font:600 10px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);margin-top:6px}
+  .model{display:grid;gap:28px;margin-top:24px}
+  @media(min-width:900px){.model{grid-template-columns:1fr 1.1fr}}
+  .slider{margin-bottom:14px}
+  .slider label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+  .slider label b{font-variant-numeric:tabular-nums}
+  .slider input{width:100%;accent-color:var(--flamingo)}
+  .bar{display:flex;height:14px;margin:6px 0 2px;background:var(--line)}
+  .bar i{display:block;height:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--smoke);margin-top:8px}
+  .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+  .callout{background:var(--ink-raised);border:1px solid var(--line);padding:22px;margin:24px 0}
+  .callout .eyebrow{margin-bottom:8px}
+  .vs{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin:20px 0}
+  @media(min-width:760px){.vs{grid-template-columns:1fr 1fr}}
+  .vs>div{background:var(--ink);padding:22px}
+  .vs .ag{--flamingo:var(--sunset)}
+  .steps{list-style:none;padding:0;margin:20px 0;counter-reset:s}
+  .steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .steps li::before{content:counter(s);font:400 30px/1 var(--display);color:var(--flamingo)}
+  .steps b{display:block;margin-bottom:2px}
+  .stack{display:grid;gap:10px;margin:18px 0}
+  @media(min-width:760px){.stack{grid-template-columns:repeat(5,1fr)}}
+  .stack div{border:1px solid var(--line);padding:14px;font-size:14px}
+  .stack b{display:block;font:600 11px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--flamingo);margin-bottom:6px}
+  .note{font-size:13px;color:var(--smoke)}
+  .night-strip{background:#0B0A0A;color:#F4EFE8}
+</style>
+</head>
+<body class="day">
+<div class="demo-bar">Prepared for Samuel David by Eli Blatt / EMB · November 2026 · <a href="index.html">Try the prototype →</a></div>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="index.html" aria-label="west ppl prototype"><span>west</span><svg viewBox="0 0 40 100" fill="none" stroke="#B5426A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 44 C 7 34, 6 20, 12 12 C 16 6, 25 6, 27 12 C 28.5 16, 26 19, 23 19.5"/><path d="M23 19.5 L 21 25"/><path d="M14 46 C 18 40, 30 39, 34 44 C 37 48, 31 54, 22 54 C 17 54, 13 51, 14 46 Z" fill="#B5426A"/><path d="M23 54 L 23 97"/><path d="M23 72 L 15 66 L 22 62"/></svg><span>ppl</span></a>
+    <nav class="nav" aria-label="Plan sections">
+      <a href="#idea">The idea</a><a href="#build">The build</a><a href="#list">The list</a><a href="#money">The money</a><a href="#afterglow">Afterglow</a>
+    </nav>
+    <a class="btn sm" href="index.html">Prototype</a>
+  </div>
+</header>
+
+<main>
+  <section style="padding-bottom:40px">
+    <div class="wrap">
+      <p class="eyebrow">The plan</p>
+      <h1 class="d-hero">From great nights<br>to a <span class="it">real business.</span></h1>
+      <p class="lede" style="margin-top:24px">Samuel throws great events. They're small, they're good, and they pay event by event, which means living night to night. The fix isn't bigger parties. It's turning the 8,000 people who already like his nights into members, so money comes in every month, before the night, whether or not it rains.</p>
+      <div class="kpis">
+        <div><div class="big-num">8,000</div><span>People on the list today</span></div>
+        <div><div class="big-num" data-k="paid">420</div><span>Paying members, year one (base)</span></div>
+        <div><div class="big-num" data-k="rev">$0.5M</div><span>Year-one revenue (base)</span></div>
+        <div><div class="big-num" data-k="founding">$108K</div><span>Cash from founding members in ~60 days</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <nav class="toc" aria-label="Contents">
+      <a href="#idea">1 · The idea, fleshed out</a>
+      <a href="#build">2 · What we build first</a>
+      <a href="#list">3 · The 8,000-person list</a>
+      <a href="#money">4 · How it makes money</a>
+      <a href="#model">5 · The model (try it)</a>
+      <a href="#afterglow">6 · West Ppl × Afterglow</a>
+      <a href="#next">7 · The next 90 days</a>
+      <a href="#notes">Notes</a>
+    </nav>
+
+    <div>
+      <section id="idea">
+        <p class="eyebrow">1 · The idea</p>
+        <h2 class="d-h1">A members' club <span class="it">without the building.</span></h2>
+        <p>Soho House sells two things: a building and a guest list. The building is the expensive part, and it's the part younger members care least about. West Ppl sells the guest list, the calendar and the introductions, and borrows the buildings. Its venues are restaurants, rooftops and houses that are glad to have a full room of the right people on a Tuesday.</p>
+        <p>Samuel's own words for it are better than any pitch: <em>good people, great places, better stories</em>. The platform's job is to make that repeatable in three cities without Samuel personally texting every guest.</p>
+        <h3>What a member gets</h3>
+        <ul class="plain">
+          <li><b>A city home</b>: West Ave (Miami), West Village (New York), West Hollywood (LA). Each has its own calendar, waitlist and host.</li>
+          <li><b>A calendar worth clearing your week for</b>: dinners, rooftops, house parties, morning walks. Most are members-and-guests; some are public, as a way in.</li>
+          <li><b>One-tap RSVPs</b>, as easy as Partiful, with member pricing and first access.</li>
+          <li><b>Introductions</b>: a directory and direct messages between approved members, and two introductions each to pass on.</li>
+          <li><b>Perks</b> from partner venues and brands that want this crowd. This builds on Samuel's own "concierge marketplace" and "West Mag" ideas from the West Ave Group mockup.</li>
+        </ul>
+        <h3>Why now</h3>
+        <p>The same shift the Afterglow plan documents applies here. Late-night clubbing is shrinking, Gen Z and millennials drink less and sleep more, and they spend on <em>experiences with people they like</em>. Smaller, earlier, curated nights are the growing part of the market. West Ppl already throws those nights. It just hasn't been paid for the community that keeps coming back.</p>
+      </section>
+
+      <section id="build">
+        <p class="eyebrow">2 · The build</p>
+        <h2 class="d-h1">Reuse, build, <span class="it">and what we need.</span></h2>
+        <p>Samuel asked three questions. Here are the answers.</p>
+
+        <h3>What we can reuse</h3>
+        <ul class="plain">
+          <li><b>The brand</b>: the flamingo wordmark, black and blush pink, heavy condensed headlines. It's good. The <a href="index.html">prototype</a> keeps all of it and adds an italic serif for warmth, a tighter palette and rules for members-only and Afterglow moments.</li>
+          <li><b>The copy and structure</b>: Home / About / Events / Apply maps directly onto Lobby / Calendar / Members. "Small rooms, good tables, and the people around them" stays.</li>
+          <li><b>The photography</b> from past events goes into every image slot in the prototype.</li>
+          <li><b>The West Ave Group mockup</b> (concierge marketplace, curated experiences, West Mag) becomes Phase 3: perks and editorial, both of which make money.</li>
+          <li><b>The channels</b>: hello@westavegroup.com, @westppl, the domain.</li>
+        </ul>
+
+        <h3>What we build first</h3>
+        <p>A mobile-first web app that installs to a phone's home screen. Not an app-store app yet, so there's no review wait and one codebase.</p>
+        <div class="scroll"><table class="tl">
+          <thead><tr><th>Phase</th><th>What ships</th><th>Why first</th></tr></thead>
+          <tbody>
+            <tr><td><b>1</b><br><span class="note">Weeks 1–3</span></td><td>City pages · the Lobby (applications with city) · application review, per-city waitlists, invites · events calendar with public / members-only · RSVPs: instant or approval, capacity, waitlist, shareable links · guest list export · email invitations</td><td>Everything Samuel listed, and enough to open the Founding Circle to the list.</td></tr>
+            <tr><td><b>2</b><br><span class="note">Weeks 4–6</span></td><td>Payments: memberships, paid tickets, tables, Apple Pay · door check-in by QR · member directory and direct messages · SMS invites and reminders</td><td>Turns RSVPs into revenue, and attendance into data sponsors pay for.</td></tr>
+            <tr><td><b>3</b><br><span class="note">Weeks 7–10</span></td><td>Perks marketplace · partner and sponsor dashboards · West Mag (editorial) · Afterglow ticketing on the same rails</td><td>Opens the second and third revenue lines.</td></tr>
+          </tbody>
+        </table></div>
+
+        <h3>The simplest way to do messaging</h3>
+        <p>Two kinds, kept separate. <b>Announcements</b> (invitations, event updates, "doors at 8") go out from the host screen as email plus a text to people who opted in. <b>Member-to-member messages</b> are simple one-to-one threads inside the app, only between approved members, with an email nudge when one arrives. No group chats at launch. They're what makes communities feel like work. Add them per city later if members ask.</p>
+
+        <h3>How it's built</h3>
+        <div class="stack">
+          <div><b>App</b>Next.js web app, mobile-first, installable. Hosted on Vercel.</div>
+          <div><b>Data &amp; login</b>Supabase: database, login by email link or text code, members-only rules, live messages.</div>
+          <div><b>Money</b>Stripe: memberships, tickets, tables, refunds, Apple Pay. Later, payouts to venues.</div>
+          <div><b>Messages</b>Resend (email) and Twilio (text) for invites, reminders, blasts.</div>
+          <div><b>Host screen</b>Inside the same app: publish events, review applications, pull lists.</div>
+        </div>
+        <p class="note">Running cost at launch: roughly $100–300 a month, plus per-text and card fees. We looked at running it on Luma, Partiful or Posh. They're faster on day one, but they own the guest relationship, take a fee on every ticket, and can't do members-only events, per-city waitlists and memberships together. Community tools like Circle or Mighty Networks are weak at events and tickets. West Ppl's whole value is the guest list, so it should own it.</p>
+
+        <h3>Built in now so the money options are easy later</h3>
+        <ul class="plain">
+          <li><b>One record per person</b> through their whole life with West Ppl: contact → applicant → member → guest → attendee. Each has a city, tags, how they found us and <em>who introduced them</em>.</li>
+          <li><b>Every event has ticket types</b> from day one (free, paid, table, comp) even when everything is free, so charging later is a setting, not a rebuild.</li>
+          <li><b>Check-ins at the door.</b> Real attendance is what sponsors and venues pay for, and what earns members their status.</li>
+          <li><b>Consent flags</b> for email, text and partner offers, captured at application, so partnerships never put the list at risk.</li>
+          <li><b>Partners and perks as first-class objects</b> (venue, brand, offer, redemptions) so a sponsor gets a real report.</li>
+        </ul>
+
+        <h3>What we need from Samuel to start</h3>
+        <ol class="plain">
+          <li><b>The list</b> as a spreadsheet: name, email, phone, city, how you know them, last event attended (whatever exists).</li>
+          <li>Access to the current site and domain.</li>
+          <li>Event photography you're happy to use publicly.</li>
+          <li>The next 60 days of events: date, venue, capacity, price, public or members.</li>
+          <li>Your call on membership price, and the first 100 names per city for Founding invites.</li>
+          <li>Your 5–10 best venue relationships and the deals you have with them (bar minimums, splits).</li>
+          <li>A Stripe account in the business's name, or the company documents to set one up.</li>
+          <li>Who besides you reviews applications in New York and LA.</li>
+        </ol>
+      </section>
+
+      <section id="list">
+        <p class="eyebrow">3 · The list</p>
+        <h2 class="d-h1">8,000 people <span class="it">who already said yes.</span></h2>
+        <p>The list is the business. Most event companies spend their marketing budget finding people. Samuel already has 8,000 who've come to something, in the three cities that spend the most on going out. The plan is to turn the people who love West Ppl into members, the people who like it into guests, and keep everyone else warm.</p>
+        <ol class="steps">
+          <li><div><b>Week 1: clean and sort</b>Dedupe, check emails, tag by city and by how recently they came. Three tiers (estimates until we see the real list): <b>A</b>, about 800 who came twice or more this year; <b>B</b>, about 2,400 who came once or engage; <b>C</b>, the rest.</div></li>
+          <li><div><b>Week 2: the Founding Circle</b>A personal invitation to tier A: 100 founding spots per city at <b>$360 a year, locked for life</b>, with two guest passes a month and first call on Afterglow tables. At a 25–35% yes rate that's 200–280 founding members. At $360 prepaid, that's <b>$72K–$100K in hand within about 60 days</b>.</div></li>
+          <li><div><b>Weeks 3–4: the Lobby opens</b>Tier B gets "The Lobby is open," with a two-week window to apply. Every founding member gets two introductions to pass on. Introductions through friends is the brand, and it's free acquisition.</div></li>
+          <li><div><b>Month 2 onward: the way in</b>Tier C gets public events first (free or cheap RSVP, members free). Come to one, then you can apply. That re-engages people without discounting membership.</div></li>
+          <li><div><b>Every week: one rhythm</b>A Thursday "This week at West" email per city. Texts only for people who opted in (that's the law). Nothing else. Restraint is part of the brand.</div></li>
+        </ol>
+        <div class="callout">
+          <p class="eyebrow">The rule</p>
+          <p style="margin:0">The list is never sold or shared. Sponsors get presence at events and aggregate insight (for example, "62% of members are 28–40, live in Brickell and Wynwood"), never contacts. The day a member gets a spam email because they joined West Ppl, the list starts dying.</p>
+        </div>
+      </section>
+
+      <section id="money">
+        <p class="eyebrow">4 · The money</p>
+        <h2 class="d-h1">Four ways in. <span class="it">One is monthly.</span></h2>
+        <p>Samuel asked where the strongest opportunity is. In order:</p>
+        <ol class="plain">
+          <li><b>Memberships (strongest, do first).</b> Recurring, paid in advance, and it changes his life from night-to-night to month-to-month. It's also what makes the business worth something if it's ever sold.</li>
+          <li><b>Ticketed experiences.</b> Already happening. The platform adds member pricing, paid tables, waitlists that fill no-shows, and no ticketing-company fees.</li>
+          <li><b>Venue and brand partnerships.</b> Venues pay (in bar splits or fees) to fill rooms on slow nights. Brands pay to be in front of a verified, affluent, three-city audience. This becomes real at about 500 paying members and steady check-in data.</li>
+          <li><b>Perks members actually value.</b> Smallest money, biggest retention. Priority tables, a hotel rate in the other two cities, early Afterglow access. Commission-based, so it costs nothing to run.</li>
+        </ol>
+        <div class="cards">
+          <div><h4>The Lobby</h4><div class="price">Free · by approval</div><ul><li>Public events at full price</li><li>Waitlist for your city</li><li>The Thursday email</li></ul></div>
+          <div><h4>Member</h4><div class="price">$39 / month or $420 / year</div><ul><li>Members-only gatherings</li><li>Member pricing, bring a guest</li><li>Directory and messages</li><li>Afterglow presale</li></ul></div>
+          <div><h4>Founding Circle</h4><div class="price">$360 / year · 100 per city</div><ul><li>Rate locked for life</li><li>Two guest passes a month</li><li>Priority seating</li><li>First call on Afterglow tables</li></ul></div>
+        </div>
+        <p class="note">For scale: Soho House runs roughly $2,000–$4,000 a year with a building. West Ppl at $420 is priced for a 28-year-old who goes out twice a month, which is the point.</p>
+      </section>
+
+      <section id="model">
+        <p class="eyebrow">5 · The model</p>
+        <h2 class="d-h1">Year one, <span class="it">your assumptions.</span></h2>
+        <p>Move the sliders. The defaults are the base case: cautious on conversion, realistic on events.</p>
+        <div class="model">
+          <div data-sliders></div>
+          <div>
+            <div class="scroll"><table class="tl" data-out></table></div>
+            <div class="bar" data-mix aria-hidden="true"></div>
+            <div class="legend" data-legend></div>
+          </div>
+        </div>
+        <h3>Three years, base case</h3>
+        <div class="scroll"><table class="tl" data-years></table></div>
+        <p class="note">Year two assumes members roughly double through introductions and the Afterglow funnel, events up 50%, and a first full-time hire. Year three adds two more cities, picked by where the list and the waitlists are strongest, and a small full-time team. These are planning numbers, not promises. Real ones come from the first 60 days.</p>
+      </section>
+
+      <section id="afterglow">
+        <p class="eyebrow">6 · West Ppl × Afterglow</p>
+        <h2 class="d-h1">One builds the crowd. <span class="it">One fills the stage.</span></h2>
+        <p>Afterglow Electronic is the 4pm-to-midnight, 5,000-person electronic music series planned for Miami's October–March season, with Samuel already named as co-founder and COO. On paper it's the bigger business. In practice it carries a risk West Ppl solves, and West Ppl has a ceiling Afterglow lifts.</p>
+
+        <h3>Side by side</h3>
+        <div class="scroll"><table class="tl">
+          <thead><tr><th></th><th>West Ppl (year one, base)</th><th>Afterglow (season one, per its plan)</th></tr></thead>
+          <tbody>
+            <tr><td>Revenue</td><td data-k="rev2">~$0.5M</td><td>$5.6M (6 events × $932K)</td></tr>
+            <tr><td>Profit</td><td data-k="profit2">~$0.3M contribution</td><td>$1.74M net (31%)</td></tr>
+            <tr><td>Money needed to start</td><td>Almost none; the founding members fund it</td><td>$700K ($500K credit line + $200K notes)</td></tr>
+            <tr><td>Time to first dollar</td><td>~30 days</td><td>First event; tickets sell 6–10 weeks out</td></tr>
+            <tr><td>One bad night costs</td><td>A few thousand dollars</td><td>Up to ~$580K of committed costs if tickets don't sell or weather cancels</td></tr>
+            <tr><td>Kind of revenue</td><td>A third recurring in year one, rising to ~40%; events all year</td><td>Six nights, seasonal</td></tr>
+            <tr><td>What a buyer pays for it</td><td>Recurring member businesses trade at a multiple of revenue</td><td>Promoters trade at a multiple of profit, discounted for lumpiness</td></tr>
+            <tr><td>Ceiling</td><td>~$3M a year at 5 cities, 3,000 members</td><td>$15–20M a year if it expands to LA, Austin and Denver as planned</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="vs">
+          <div><p class="eyebrow">What West Ppl gives Afterglow</p><p style="margin:0">Afterglow's biggest risk is selling 5,000 tickets at $150 for a brand nobody has heard of. West Ppl turns that into a presale to people who already trust Samuel's taste.</p></div>
+          <div class="ag"><p class="eyebrow">What Afterglow gives West Ppl</p><p style="margin:0">A marquee that makes membership worth more, sponsor packages big enough to matter, and 30,000 attendees a season walking past a "join the Lobby" code.</p></div>
+        </div>
+
+        <h3>The synergies, in dollars</h3>
+        <div class="scroll"><table class="tl">
+          <thead><tr><th>Synergy</th><th>How</th><th class="n">Per season</th></tr></thead>
+          <tbody>
+            <tr><td>Presale that de-risks talent deposits</td><td>If 10% of the list buys 1.5 tickets on average, that's ~1,200 tickets (about a quarter of each event) sold to members before public on-sale, about $180K per event in hand before the headliner fee is due.</td><td class="n">Risk, not profit</td></tr>
+            <tr><td>Marketing Afterglow doesn't have to buy</td><td>Afterglow's plan budgets $17.8K marketing per event, about $3.50 per ticket, which is thin for a new brand. 1,200 tickets sold through an owned list at a typical $15 cost per ticket is ~$18K per event.</td><td class="n">~$108K</td></tr>
+            <tr><td>Ticketing on West Ppl's rails</td><td>The plan carries $38K per event in ticketing fees. Selling through the West Ppl platform on Stripe costs ~$26K, and Afterglow keeps every buyer's details.</td><td class="n">~$71K</td></tr>
+            <tr><td>Members from the crowd</td><td>30,000 attendees a season. If 2–3% apply and a third pay, that's 200–300 new members.</td><td class="n">$80–125K recurring</td></tr>
+            <tr><td>Tables</td><td>Founding members get first call on Afterglow tables ($10K each in the plan). Groups of members are natural table buyers.</td><td class="n">Fills the $40K/event line</td></tr>
+            <tr><td>One sponsor story</td><td>Six big nights plus ~60 intimate gatherings plus an 8,000-person owned audience is a far better pitch than either alone. Afterglow alone plans $68K per event.</td><td class="n">Upside</td></tr>
+            <tr class="total"><td>Hard-dollar synergy</td><td></td><td class="n">~$260–300K / season</td></tr>
+          </tbody>
+        </table></div>
+        <p>There's a human synergy too. Afterglow runs six months a year. West Ppl gives Samuel steady income through the off-season, so the COO of a $5M event series isn't living hand to mouth between seasons.</p>
+        <p class="note">There's also a link to Hype Coach. West Ppl's "who introduced you" graph is exactly the friends-of-friends data Hype Coach's introductions need. It's worth keeping in mind as both get built.</p>
+
+        <div class="callout">
+          <p class="eyebrow">The recommendation</p>
+          <p>Run them as one family. West Ppl is the community and the platform, and Afterglow is the flagship that runs on it. Sequence it so each step pays for the next:</p>
+          <ol class="plain" style="margin-bottom:0">
+            <li><b>December:</b> launch West Ppl in Miami and open the Founding Circle to the list.</li>
+            <li><b>January 23:</b> an <b>Afterglow Preview</b> at 1,000 people (the plan's own 1K scenario), sold to West Ppl members first. It proves demand and the format cheaply.</li>
+            <li><b>Spring 2027:</b> raise for the Afterglow season with real sell-through numbers and member presale commitments, not projections. That's a much easier conversation for the $700K.</li>
+            <li><b>October 2027:</b> Afterglow season one at 5,000, with West Ppl as the presale engine and ticketing platform.</li>
+          </ol>
+        </div>
+        <p class="note"><b>Open question for Eli and Samuel:</b> one company, or two with a revenue share for presale, ticketing and members? It depends on how equity is split today, and it's worth settling before the January preview.</p>
+      </section>
+
+      <section id="next">
+        <p class="eyebrow">7 · Next 90 days</p>
+        <h2 class="d-h1">What happens <span class="it">Monday.</span></h2>
+        <div class="scroll"><table class="tl">
+          <thead><tr><th>When</th><th>Samuel</th><th>EMB</th></tr></thead>
+          <tbody>
+            <tr><td>Week 1</td><td>Send the list, photos, next 60 days of events, venue deals</td><td>Clean and segment the list · set up accounts · start Phase 1</td></tr>
+            <tr><td>Weeks 2–3</td><td>Pick the first 100 Founding names per city · approve copy</td><td>Lobby, calendar, RSVPs, host screen live on West Ppl's own domain</td></tr>
+            <tr><td>Week 4</td><td>Personal Founding Circle invitations (Miami first)</td><td>Payments and memberships live</td></tr>
+            <tr><td>Weeks 5–6</td><td>The Lobby opens to tier B · first members-only dinner on the platform</td><td>Check-in, directory, messages, texts</td></tr>
+            <tr><td>Weeks 7–10</td><td>Afterglow Preview on sale to members · New York Founding Circle</td><td>Perks, partner reporting, Afterglow ticketing</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section id="notes">
+        <p class="eyebrow">Notes</p>
+        <h2 class="d-h2">Housekeeping on the Afterglow model</h2>
+        <p>While pulling numbers from the Afterglow plan and model, a few figures don't agree with each other. They're worth fixing before the plan goes to investors:</p>
+        <ul class="plain">
+          <li>The plan's revenue table shows VIP at $190K and tables at $890K. The model's assumptions show VIP at $150K (500 × $300) and tables at $40K (4 × $10K). The assumptions are the ones that add up to the stated $850K.</li>
+          <li>Season attendance is listed as 17,100. Six events at ~5,040 is about 30,240.</li>
+          <li>The 1,000-person scenario shows $67K revenue on the P&amp;L sheet and $91K on its assumptions sheet.</li>
+        </ul>
+        <p class="note">West Ppl figures here are planning estimates built from the list size Samuel gave and typical rates for membership communities. Member counts in the prototype are illustrative. Nothing on these pages has been shared beyond this link, which isn't indexed by search engines.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><p class="muted" style="margin:0">West Ppl · Good people. Great places. Better stories.</p><p class="cities-line">MIAMI · NEW YORK · LOS ANGELES</p></div>
+    <div><h4>See it</h4><a href="index.html">The prototype</a><a href="index.html#lobby">The Lobby</a><a href="index.html#inside">Host screen</a></div>
+    <div><h4>Prepared by</h4><a href="/">Eli Blatt · emb.org</a></div>
+  </div>
+</footer>
+<script src="plan.js?v=3"></script>
+</body>
+</html>
