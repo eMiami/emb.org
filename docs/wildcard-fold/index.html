@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Wildcard Fold — pouch wallet prototype</title>
+<meta name="description" content="Prototype spec: a black leather fold-over carrier for three (or two) Magic Items Wildcard Small pouches.">
+<meta property="og:title" content="Wildcard Fold — pouch wallet prototype">
+<meta property="og:image" content="https://www.emb.org/wildcard-fold/img/3W_open.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#f2eee6;--paper:#fbf9f5;--ink:#141413;--mute:#5f5b54;--line:#d9d3c7;--acc:#7a1e26;--max:1240px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+img,video{display:block;max-width:100%;height:auto}
+a{color:var(--acc)}a:hover{color:#4d1117}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+header.top{padding:22px 0;border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.mark{font:800 15px/1 "Inter Tight",sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.tag{font-size:13px;color:var(--mute)}
+h1,h2,h3{font-family:"Inter Tight",sans-serif;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(40px,6vw,76px);line-height:.98;font-weight:800}
+h2{font-size:clamp(28px,3.4vw,40px);line-height:1.05;font-weight:800;margin-bottom:14px}
+h3{font-size:19px;font-weight:700;margin-bottom:6px}
+.eyebrow{font:700 12px/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+section{padding:72px 0;border-bottom:1px solid var(--line)}
+.lede{font-size:clamp(18px,1.6vw,21px);color:#2b2925;max-width:620px;margin:18px 0 0}
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:44px;align-items:center}
+.stage{background:#e9e3d8;border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:30px}
+.stats div{background:var(--paper);padding:14px 16px}
+.stats b{display:block;font:700 19px/1.15 "Inter Tight",sans-serif}
+.stats span{font-size:12.5px;color:var(--mute)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:28px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.card .body{padding:18px 20px 20px}
+.card p{margin:0;color:#34312c;font-size:15px}
+.num{font:800 13px/1 "Inter Tight",sans-serif;color:var(--acc);letter-spacing:.1em;margin-bottom:8px}
+.variants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:28px}
+.vhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pill{font:600 12px/1 Inter,sans-serif;padding:6px 9px;border-radius:99px;background:#efe9de;color:#3a3630}
+.pill.rec{background:var(--acc);color:#fff}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--mute);font-size:12.5px;text-transform:uppercase;letter-spacing:.06em}
+.tbox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-top:22px}
+.dwg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:18px;overflow-x:auto}
+.dwg img{min-width:760px;width:100%}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.tabs button{font:600 14px Inter,sans-serif;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:11px 16px;border-radius:99px;cursor:pointer;min-height:44px}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.gallery figure{margin:0}
+.gallery figcaption{font-size:13px;color:var(--mute);padding:7px 2px 0}
+.gallery img{border-radius:10px;cursor:zoom-in;background:#e9e3d8}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+ul.clean{margin:10px 0 0;padding-left:20px}ul.clean li{margin:6px 0}
+.flag{border-left:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:14px}
+.flag h3{display:flex;gap:10px;align-items:baseline}
+.flag h3 i{font-style:normal;font:800 12px/1 "Inter Tight",sans-serif;color:#fff;background:var(--acc);border-radius:5px;padding:5px 7px}
+.foot{padding:40px 0 60px;color:var(--mute);font-size:13.5px}
+.lb{position:fixed;inset:0;background:rgba(20,20,19,.92);display:none;align-items:center;justify-content:center;padding:24px;z-index:9}
+.lb.on{display:flex}.lb img{max-height:92vh;width:auto;border-radius:8px}
+.lb button{position:absolute;top:14px;right:16px;background:none;border:0;color:#fff;font:600 15px Inter;padding:12px;cursor:pointer}
+@media (max-width:900px){.hero,.two{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.variants{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.gallery{grid-template-columns:1fr}.stats{grid-template-columns:1fr}section{padding:52px 0}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="mark">Wildcard Fold</span><span class="tag">Prototype spec · upsell concept for Magic Items · Nov 2026</span></div></header>
+
+<section style="padding-top:56px">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">A wallet for three pouches</p>
+      <h1>Three Wildcards.<br>One fold.</h1>
+      <p class="lede">A strip of black cactus leather with three card-style slots sized to the Wildcard Small. Slide a pouch into each slot, fold it like a trifold wallet, and two hidden neodymium magnets hold it shut. Unfolded, it flexes at the stitched hinges and lies flat in a pocket.</p>
+      <div class="stats">
+        <div><b>59 × 56 × 21 mm</b><span>closed (2.3 × 2.2 × 0.8 in)</span></div>
+        <div><b>194 mm</b><span>open length (7.6 in)</span></div>
+        <div><b>3 × Small</b><span>46 × 51 × 3.8 mm pouches</span></div>
+      </div>
+    </div>
+    <div class="stage">
+      <video src="anim_3W.mp4" poster="img/3W_open.jpg" autoplay muted loop playsinline aria-label="Animation: three pouches slide into the slots, then the wallet folds shut"></video>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>Slot, fold, snap.</h2>
+    <div class="steps">
+      <div class="card"><img src="img/3W_loading.jpg" alt="Three pouches above their slots" loading="lazy"><div class="body"><div class="num">01</div><h3>Slide in</h3><p>Each pouch drops mouth-up into a pocket that covers its lower half, like a card in a wallet. The mouth and the top half stay exposed, so you can open a pouch without taking it out.</p></div></div>
+      <div class="card"><img src="img/3W_folding.jpg" alt="Wallet partway through folding" loading="lazy"><div class="body"><div class="num">02</div><h3>Fold</h3><p>The left panel folds onto the centre, pouches face to face. The right panel wraps over the stack. The two hinges are different widths (15.6 and 22.2 mm) because the outer one has to wrap three pouches, not two.</p></div></div>
+      <div class="card"><img src="img/3W_closed.jpg" alt="Closed wallet" loading="lazy"><div class="body"><div class="num">03</div><h3>Snap shut</h3><p>Two 10 × 3 mm N52 discs sit between the backing plies, low on the panel and away from the pouch-mouth magnets. When the wallet folds, they meet through one pouch layer and hold it closed.</p></div></div>
+    </div>
+    <div class="two" style="margin-top:40px;align-items:center">
+      <img src="img/3W_flex.jpg" alt="Unfolded wallet flexed into an arch" loading="lazy" style="border-radius:12px">
+      <div><h3>Open carry</h3><p style="margin:0;color:#34312c">Unfolded, the strip is 7.6 × 2.2 in and about 6 mm thick. The pouches keep the three panels stiff, so it bends at the two hinges, not along its whole length. It reads as a gentle arch rather than a smooth curve. Lying flat, it's thinner than a folded card wallet and fits a front or back pocket.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Four versions</p>
+    <h2>Trifold or bifold, side by side or end to end.</h2>
+    <p style="max-width:760px;color:#34312c;margin:0">"Widthwise" puts the pouches side by side with their mouths up (the 46 mm side runs along the strip). "Lengthwise" puts them end to end with their mouths sideways (the 51 mm side runs along the strip). Widthwise turns out to be the shorter one. Most of the length comes from the hinges, so dropping to a bifold saves far more than changing orientation.</p>
+    <img src="img/lineup_open.jpg" alt="All four versions laid open" loading="lazy" style="border-radius:12px;margin-top:26px">
+    <div class="tbox"><table>
+      <thead><tr><th>Version</th><th>Pouches</th><th>Open (L × H)</th><th>Closed (W × H × T)</th><th>Hinges</th><th>Magnet pull through</th></tr></thead>
+      <tbody>
+        <tr><td><b>Trifold, widthwise</b></td><td>3</td><td>193.8 × 56 mm<br><span style="color:var(--mute)">7.63 × 2.20 in</span></td><td>58.7 × 56 × 20.6 mm<br><span style="color:var(--mute)">2.31 × 2.20 × 0.81 in</span></td><td>15.6 + 22.2 mm</td><td>1 pouch (≈5 mm)</td></tr>
+        <tr><td><b>Trifold, lengthwise</b></td><td>3</td><td>213.3 × 54 mm<br><span style="color:var(--mute)">8.40 × 2.13 in</span></td><td>65.2 × 54 × 20.6 mm<br><span style="color:var(--mute)">2.57 × 2.13 × 0.81 in</span></td><td>15.6 + 22.2 mm</td><td>1 pouch (≈5 mm)</td></tr>
+        <tr><td><b>Bifold, widthwise</b></td><td>2</td><td>122.6 × 56 mm<br><span style="color:var(--mute)">4.83 × 2.20 in</span></td><td>58.7 × 56 × 14.0 mm<br><span style="color:var(--mute)">2.31 × 2.20 × 0.55 in</span></td><td>15.6 mm</td><td>2 pouches (≈10 mm)</td></tr>
+        <tr><td><b>Bifold, lengthwise</b></td><td>2</td><td>135.6 × 54 mm<br><span style="color:var(--mute)">5.34 × 2.13 in</span></td><td>65.2 × 54 × 14.0 mm<br><span style="color:var(--mute)">2.57 × 2.13 × 0.55 in</span></td><td>15.6 mm</td><td>2 pouches (≈10 mm)</td></tr>
+      </tbody></table></div>
+    <div class="variants">
+      <div class="card"><img src="img/3W_open.jpg" alt="Trifold widthwise, open" loading="lazy"><div class="body"><div class="vhead"><h3>Trifold, widthwise</h3><span class="pill rec">Lead design</span></div><p>Shortest trifold. Mouths face up, so every pouch opens in place. Closes to a 2.3 in square.</p></div></div>
+      <div class="card"><img src="img/3L_open.jpg" alt="Trifold lengthwise, open" loading="lazy"><div class="body"><div class="vhead"><h3>Trifold, lengthwise</h3><span class="pill">+20 mm long</span></div><p>Pockets cover the back half of each pouch and mouths face sideways. It's narrower, but longer open and wider closed.</p></div></div>
+      <div class="card"><img src="img/2W_open.jpg" alt="Bifold widthwise, open" loading="lazy"><div class="body"><div class="vhead"><h3>Bifold, widthwise</h3><span class="pill">Slimmest</span></div><p>Two pouches. 4.8 in open and 0.55 in closed. It only bends at one hinge, so it flexes into an L, not an arch.</p></div></div>
+      <div class="card"><img src="img/2L_open.jpg" alt="Bifold lengthwise, open" loading="lazy"><div class="body"><div class="vhead"><h3>Bifold, lengthwise</h3><span class="pill">2 pouches</span></div><p>The bifold with sideways mouths. 5.3 in open.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Spec sheets</p>
+    <h2>Flat patterns, to the millimetre.</h2>
+    <div class="tabs" role="tablist" aria-label="Version">
+      <button role="tab" aria-selected="true" data-v="3W">Trifold · widthwise</button>
+      <button role="tab" aria-selected="false" data-v="3L">Trifold · lengthwise</button>
+      <button role="tab" aria-selected="false" data-v="2W">Bifold · widthwise</button>
+      <button role="tab" aria-selected="false" data-v="2L">Bifold · lengthwise</button>
+    </div>
+    <div class="dwg"><img id="dwg" src="img/3W_pattern.svg" alt="Dimensioned flat pattern"></div>
+    <div class="gallery" id="gal"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div>
+      <p class="eyebrow">Build</p>
+      <h2>Materials &amp; construction</h2>
+      <div class="tbox" style="margin-top:12px"><table>
+        <thead><tr><th>Part</th><th>Spec</th><th>Qty</th></tr></thead>
+        <tbody>
+          <tr><td>Backing, outer ply</td><td>Black cactus leather, ~1.0 mm, cut to the full strip with 4.5 mm corner radius</td><td>1</td></tr>
+          <tr><td>Backing, liner ply</td><td>Black cactus leather or thin liner, ~0.6 mm, bonded to the outer ply. Holds the magnets.</td><td>1</td></tr>
+          <tr><td>Pocket layer</td><td>Black cactus leather, ~1.2 mm. Widthwise: one strip, full length × 28 mm. Lengthwise: one piece per panel, 29 mm wide (the outermost piece runs to the strip's end).</td><td>1 / 2–3</td></tr>
+          <tr><td>Closure magnets</td><td>N52 neodymium disc, 10 × 3 mm, set in 10.5 mm holes punched in the liner ply. Opposite poles facing.</td><td>2</td></tr>
+          <tr><td>Thread</td><td>Black Kevlar (same as the pouches). Running edge stitch 3 mm in; X-stitch columns in the hinges.</td><td>—</td></tr>
+          <tr><td>Edges</td><td>Burnished or painted black</td><td>—</td></tr>
+        </tbody></table></div>
+    </div>
+    <div>
+      <p class="eyebrow">&nbsp;</p>
+      <h3 style="margin-top:6px">Sequence</h3>
+      <ol class="clean" style="padding-left:20px">
+        <li>Cut the outer ply, liner and pocket layer. Punch the magnet holes in the liner at M1/M2 (see pattern).</li>
+        <li>Drop in the magnets (check polarity by folding the liner first), then bond the liner to the outer ply.</li>
+        <li>Lay the pocket layer on the front and edge-stitch the perimeter. The bottom and ends go through all layers; the pocket's open edge stays unstitched.</li>
+        <li>Sew the X-stitch column down the centre of each hinge, through all layers. This closes the slot sides. Pull it snug but not tight, so the hinge can still fold 180°.</li>
+        <li>Burnish the edges. Test fit with real pouches before you set the pocket tension for production.</li>
+      </ol>
+      <h3 style="margin-top:22px">Fit details</h3>
+      <ul class="clean">
+        <li>Panel 49 mm wide for a 46 mm pouch: 1.5 mm ease per side, before the pouch's own 3.8 mm thickness eats into it.</li>
+        <li>The pouch sits 4.5 mm above the bottom edge, clear of the edge stitch. 27.5 mm of its 51 mm (54%) shows above the pocket.</li>
+        <li>Hinge width = the stack it wraps plus two 3.5 mm bend radii. Inner hinge: 2 loaded panels. Outer hinge: 3 panels + 1 backing.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Test before production</p>
+    <h2>What the first prototype has to prove</h2>
+    <div class="flag"><h3><i>1</i>Will pouches stay put?</h3><p style="margin:0">Only friction holds a pouch in a half-height pocket. Flat in a pocket that's fine. Flexed or upside down, a loose pocket will let pouches walk out. Cut the first pocket snug (about 0.5 mm less ease than drawn) and shake-test it before you loosen it.</p></div>
+    <div class="flag"><h3><i>2</i>Magnet interference</h3><p style="margin:0">When the wallet folds, the left and centre pouches end up face to face with their mouth magnets lined up. They may attract each other, which helps it close, or pull the pouch lips apart, which doesn't. The closure discs sit low (13 mm up) to stay away from the pouch magnets. Check both effects on the bench.</p></div>
+    <div class="flag"><h3><i>3</i>Bifold closure strength</h3><p style="margin:0">In the bifold the magnet pair pulls through two pouches (about 10 mm), double the trifold's gap. Expect a much weaker snap with 10 × 3 discs. Try 12 × 3 or stacked discs there.</p></div>
+    <div class="flag"><h3><i>4</i>Stitching across a fold</h3><p style="margin:0">Thread doesn't stretch, and the hinge's outer face gets longer when it folds. An X-stitch handles that better than a straight seam, but sewn tight it will pucker or stop the fold short. Sew the hinges with the strip bent around a 7 mm rod.</p></div>
+  </div>
+</section>
+
+<div class="foot"><div class="wrap">Concept prototype for Magic Items (magicitems.store), built around the Wildcard Small (46 × 51 × 3.8 mm, magnetic closure). Renders are from a parametric 3D model; all dimensions come from that model, not a physical sample. Pouch colours shown: brown, green and red cactus.</div></div>
+
+<div class="lb" id="lb" role="dialog" aria-label="Image viewer"><button type="button" id="lbx">Close</button><img alt=""></div>
+<script>
+(function(){
+  var caps={open:"Open, loaded",loading:"Loading",folding:"Folding",closed:"Closed",closed_back:"Closed, open side",flex:"Flexed",top:"Top view"};
+  var gal=document.getElementById('gal'),dwg=document.getElementById('dwg');
+  function show(v){
+    dwg.src='img/'+v+'_pattern.svg';
+    gal.innerHTML='';
+    ['open','loading','folding','closed','closed_back','flex'].forEach(function(s){
+      var f=document.createElement('figure'),i=document.createElement('img'),c=document.createElement('figcaption');
+      i.src='img/'+v+'_'+s+'.jpg';i.alt=caps[s];i.loading='lazy';c.textContent=caps[s];f.appendChild(i);f.appendChild(c);gal.appendChild(f);
+    });
+    document.querySelectorAll('.tabs button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.v===v?'true':'false')});
+  }
+  document.querySelectorAll('.tabs button').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.v)})});
+  show('3W');
+  var lb=document.getElementById('lb'),li=lb.querySelector('img');
+  document.addEventListener('click',function(e){var t=e.target;if(t.tagName==='IMG'&&t.closest('.gallery,.card,.two,section')&&!t.closest('.lb')&&t.id!=='dwg'){li.src=t.src.replace('_sm','');lb.classList.add('on')}});
+  document.getElementById('lbx').addEventListener('click',function(){lb.classList.remove('on')});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('on')});
+})();
+</script>
+</body>
+</html>
